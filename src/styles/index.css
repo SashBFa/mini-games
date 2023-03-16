@@ -13,3 +13,16 @@
   user-select: none;
   font-family: 'Barlow Semi Condensed', sans-serif;
 }
+
+.popOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getRandom } from '../tools/getRandom';
-import { ComboType } from './functions/comboArray';
+import { ComboType } from './comboArray';
 import { PlayerChoice } from './playerChoice';
 
 type PlaygroundType = {
@@ -54,8 +54,12 @@ export const Playground = ({ mode, upScore, reset }: PlaygroundType) => {
         <PlayerChoice handleChoice={handleChoice} mode={mode} />
       ) : (
         <div>
-          <div>{handPlayer.item}</div>
-          {handCPU === null ? <div /> : <div>{handCPU.item}</div>}
+          <div className={handPlayer.class}>{handPlayer.item}</div>
+          {handCPU === null ? (
+            <div />
+          ) : (
+            <div className={handCPU.class}>{handCPU.item}</div>
+          )}
         </div>
       )}
     </div>

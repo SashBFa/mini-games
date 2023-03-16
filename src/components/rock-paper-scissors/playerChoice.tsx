@@ -1,4 +1,4 @@
-import { ComboType } from './functions/comboArray';
+import { ComboType } from './comboArray';
 
 type PlayerChoiceType = {
   mode: ComboType[] | null;
@@ -10,7 +10,11 @@ export const PlayerChoice = ({ handleChoice, mode }: PlayerChoiceType) => {
     <div>
       {mode !== null &&
         mode.map((combo, index) => (
-          <button key={index} onClick={() => handleChoice(combo)}>
+          <button
+            key={index}
+            onClick={() => handleChoice(combo)}
+            className={combo.class}
+          >
             {combo.item}
           </button>
         ))}

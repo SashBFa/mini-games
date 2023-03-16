@@ -2,10 +2,11 @@ import { useState } from 'react';
 import {
   comboArray,
   ComboType,
-} from '../components/rock-paper-scissors/functions/comboArray';
+} from '../components/rock-paper-scissors/comboArray';
 import { Menu } from '../components/rock-paper-scissors/menu';
 import { Playground } from '../components/rock-paper-scissors/playground';
 import { ScoreInterface } from '../components/rock-paper-scissors/scoreInterface';
+import './../styles/rock-paper-scissors.css';
 
 export const RockPaperScissors = () => {
   const [mode, setMode] = useState<ComboType[] | null>(null);
@@ -27,7 +28,7 @@ export const RockPaperScissors = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-white">
+    <section className="relative flex flex-col items-center justify-center min-h-screen w-full">
       {mode === null ? (
         <Menu handleMode={difficulty_choice} />
       ) : (
@@ -36,6 +37,6 @@ export const RockPaperScissors = () => {
           <ScoreInterface scores={scores} />
         </>
       )}
-    </div>
+    </section>
   );
 };
