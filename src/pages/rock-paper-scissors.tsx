@@ -29,12 +29,12 @@ export const RockPaperScissors = () => {
   };
 
   return (
-    <section className="relative flex flex-col items-center justify-between min-h-screen w-full py-12">
-      <Navigation />
+    <section className="relative flex flex-col items-center justify-between min-h-screen w-full py-12 mx-auto">
       {mode === null ? (
         <Menu handleMode={difficulty_choice} />
       ) : (
         <>
+          <Navigation />
           <Playground mode={mode} reset={reset} upScore={upScore} />
           <ScoreInterface scores={scores} />
         </>

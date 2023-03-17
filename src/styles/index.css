@@ -42,7 +42,9 @@
 
 .halo-effect {
   position: relative;
-  height: auto;
+  width: 90%;
+  max-width: 375px;
+  margin: 0 auto;
   aspect-ratio: 1 / 1;
   background: var(--clr-1);
   border-radius: 0.5rem;
@@ -91,7 +93,8 @@
   margin-bottom: 2rem;
 }
 
-.btn-01 {
+.btn-01,
+.btn-02 {
   text-transform: uppercase;
   width: 140px;
   font-size: 16px;
@@ -117,7 +120,12 @@
   box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
 }
 
-.btn-01:hover {
+.btn-02 {
+  width: 200px;
+}
+
+.btn-01:hover,
+.btn-02:hover {
   background-position: 100% 0;
   moz-transition: all 0.4s ease-in-out;
   -o-transition: all 0.4s ease-in-out;
@@ -125,7 +133,8 @@
   transition: all 0.4s ease-in-out;
 }
 
-.btn-01:focus {
+.btn-01:focus,
+.btn-02:focus {
   outline: none;
 }
 
