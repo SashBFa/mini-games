@@ -14,6 +14,7 @@ export const PlayerChoice = ({ handleChoice, mode }: PlayerChoiceType) => {
           <div
             key={index}
             className={clsx(
+              'hover:scale-105',
               mode?.length === 3 ? 'triangle-child' : 'hexagone-child'
             )}
           >

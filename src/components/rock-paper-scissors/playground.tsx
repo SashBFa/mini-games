@@ -12,6 +12,7 @@ type PlaygroundType = {
 export const Playground = ({ mode, upScore, reset }: PlaygroundType) => {
   const [handPlayer, setHandPlayer] = useState<ComboType | null>(null);
   const [handCPU, setHandCPU] = useState<ComboType | null>(null);
+  const [result, setResult] = useState<string>('');
 
   const handleChoice = (item: ComboType) => {
     if (mode === null) {
@@ -24,6 +25,13 @@ export const Playground = ({ mode, upScore, reset }: PlaygroundType) => {
     }, 2000);
   };
 
+  const addResult = (str: string, nbr: number) => {
+    setTimeout(() => {
+      upScore(nbr);
+      setResult(str);
+    }, 1000);
+  };
+
   useEffect(() => {
     if (handCPU === null || handPlayer === null) {
       return;
@@ -32,20 +40,21 @@ export const Playground = ({ mode, upScore, reset }: PlaygroundType) => {
       handCPU.item === handPlayer.win[0] ||
       handCPU.item === handPlayer.win[1]
     ) {
-      upScore(0);
+      addResult('Gagné', 0);
     } else if (
       handCPU.item === handPlayer.lose[0] ||
       handCPU.item === handPlayer.lose[1]
     ) {
-      upScore(2);
+      addResult('Perdu', 2);
     } else {
-      upScore(1);
+      addResult('Egalité', 1);
     }
   }, [handPlayer, handCPU]);
 
   useEffect(() => {
     setHandPlayer(null);
     setHandCPU(null);
+    setResult('');
   }, [reset]);
 
   return (
@@ -53,29 +62,34 @@ export const Playground = ({ mode, upScore, reset }: PlaygroundType) => {
       {handPlayer === null ? (
         <PlayerChoice handleChoice={handleChoice} mode={mode} />
       ) : (
-        <div>
-          <div className={handPlayer.class}>
-            <div className="caps-cover">
-              <img
-                src={`/images/rock-paper-scissors/icon-${handPlayer.item}.svg`}
-                alt={handPlayer.item}
-                className="scale-75"
-              />
-            </div>
-          </div>
-          {handCPU === null ? (
-            <div />
-          ) : (
-            <div className={handCPU.class}>
+        <div className="flex flex-col items-center justify-center gap-12">
+          <div className="flex items-center gap-12">
+            <div className={handPlayer.class}>
               <div className="caps-cover">
                 <img
-                  src={`/images/rock-paper-scissors/icon-${handCPU.item}.svg`}
-                  alt={handCPU.item}
+                  src={`/images/rock-paper-scissors/icon-${handPlayer.item}.svg`}
+                  alt={handPlayer.item}
                   className="scale-75"
                 />
               </div>
             </div>
-          )}
+            {handCPU === null ? (
+              <div className="w-[81px] h-[81px] rounded-full bg-black/50" />
+            ) : (
+              <div className={handCPU.class}>
+                <div className="caps-cover">
+                  <img
+                    src={`/images/rock-paper-scissors/icon-${handCPU.item}.svg`}
+                    alt={handCPU.item}
+                    className="scale-75"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+          <h4 className="w-96 text-center h-12 font-black text-6xl">
+            {result}
+          </h4>
         </div>
       )}
     </div>
