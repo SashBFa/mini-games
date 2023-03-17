@@ -49,16 +49,32 @@ export const Playground = ({ mode, upScore, reset }: PlaygroundType) => {
   }, [reset]);
 
   return (
-    <div>
+    <div className="grow grid place-content-center">
       {handPlayer === null ? (
         <PlayerChoice handleChoice={handleChoice} mode={mode} />
       ) : (
         <div>
-          <div className={handPlayer.class}>{handPlayer.item}</div>
+          <div className={handPlayer.class}>
+            <div className="caps-cover">
+              <img
+                src={`/images/rock-paper-scissors/icon-${handPlayer.item}.svg`}
+                alt={handPlayer.item}
+                className="scale-75"
+              />
+            </div>
+          </div>
           {handCPU === null ? (
             <div />
           ) : (
-            <div className={handCPU.class}>{handCPU.item}</div>
+            <div className={handCPU.class}>
+              <div className="caps-cover">
+                <img
+                  src={`/images/rock-paper-scissors/icon-${handCPU.item}.svg`}
+                  alt={handCPU.item}
+                  className="scale-75"
+                />
+              </div>
+            </div>
           )}
         </div>
       )}

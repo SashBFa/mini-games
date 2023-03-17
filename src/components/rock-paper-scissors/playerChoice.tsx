@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { ComboType } from './comboArray';
 
 type PlayerChoiceType = {
@@ -7,16 +8,25 @@ type PlayerChoiceType = {
 
 export const PlayerChoice = ({ handleChoice, mode }: PlayerChoiceType) => {
   return (
-    <div>
+    <div className={clsx(mode?.length === 3 ? 'triangle' : 'hexagone')}>
       {mode !== null &&
         mode.map((combo, index) => (
-          <button
+          <div
             key={index}
-            onClick={() => handleChoice(combo)}
-            className={combo.class}
+            className={clsx(
+              mode?.length === 3 ? 'triangle-child' : 'hexagone-child'
+            )}
           >
-            {combo.item}
-          </button>
+            <button onClick={() => handleChoice(combo)} className={combo.class}>
+              <div className="caps-cover">
+                <img
+                  src={`/images/rock-paper-scissors/icon-${combo.item}.svg`}
+                  alt={combo.item}
+                  className="scale-75"
+                />
+              </div>
+            </button>
+          </div>
         ))}
     </div>
   );

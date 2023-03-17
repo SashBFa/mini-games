@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Navigation } from '../components/Navigation';
 import {
   comboArray,
   ComboType,
@@ -28,7 +29,8 @@ export const RockPaperScissors = () => {
   };
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen w-full">
+    <section className="relative flex flex-col items-center justify-between min-h-screen w-full py-12">
+      <Navigation />
       {mode === null ? (
         <Menu handleMode={difficulty_choice} />
       ) : (

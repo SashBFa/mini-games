@@ -2,10 +2,14 @@ type ScoreInterfaceType = {
   scores: number[];
 };
 export const ScoreInterface = ({ scores }: ScoreInterfaceType) => {
+  const scoreName = ['Vous', 'Egalité', 'CPU'];
   return (
-    <div className="flex gap-12">
+    <div className="flex items-center justify-between w-full max-w-xs">
       {scores.map((score, index) => (
-        <div key={index}>{score}</div>
+        <div key={index} className="score-block">
+          <h4>{scoreName[index]}</h4>
+          <p>{score}</p>
+        </div>
       ))}
     </div>
   );
