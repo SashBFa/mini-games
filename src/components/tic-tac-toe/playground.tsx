@@ -2,14 +2,21 @@ import { useEffect, useState } from 'react';
 import { CheckPossibility } from './functions/CheckPossibility';
 import { GridType, InitGrid } from './functions/InitGrid';
 import { InitPossibility, PossibilityType } from './functions/initPossibility';
+import { playerCPU } from './functions/playerCPU';
 
 type PlaygroundType = {
   upScore: (nbr: number) => void;
   firstPlayer: string;
   reset: number;
+  modeCPU: boolean | null;
 };
 
-export const Playground = ({ upScore, firstPlayer, reset }: PlaygroundType) => {
+export const Playground = ({
+  upScore,
+  firstPlayer,
+  reset,
+  modeCPU,
+}: PlaygroundType) => {
   const grid_init: GridType = InitGrid();
   const poss_init: PossibilityType = InitPossibility();
 
@@ -35,6 +42,7 @@ export const Playground = ({ upScore, firstPlayer, reset }: PlaygroundType) => {
     );
     if (newPossibilities.every((item) => !item.completed)) {
       setPossibilities(newPossibilities);
+      switchPlayer();
       return;
     }
     playerRound === 'x' ? upScore(0) : upScore(2);
@@ -44,7 +52,6 @@ export const Playground = ({ upScore, firstPlayer, reset }: PlaygroundType) => {
     if (!useGrid[y][x].value) {
       updateGrid(x, y);
       newPoss();
-      switchPlayer();
     }
   };
 
@@ -53,6 +60,15 @@ export const Playground = ({ upScore, firstPlayer, reset }: PlaygroundType) => {
       upScore(1);
     }
   }, [possibilities]);
+
+  useEffect(() => {
+    if (modeCPU && playerRound !== firstPlayer) {
+      let CPU_tour = playerCPU(possibilities, useGrid, playerRound);
+      setTimeout(() => {
+        handlePlay(CPU_tour.x, CPU_tour.y);
+      }, 1000);
+    }
+  }, [playerRound]);
 
   useEffect(() => {
     setUseGrid(grid_init);

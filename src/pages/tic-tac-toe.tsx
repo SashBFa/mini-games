@@ -5,7 +5,7 @@ import { Playground } from '../components/tic-tac-toe/playground';
 import { ScoreInterface } from '../components/tic-tac-toe/scoreInterface';
 
 export const TicTacToe = () => {
-  const [modeCPU, setModeCPU] = useState<boolean | null>(false);
+  const [modeCPU, setModeCPU] = useState<boolean | null>(true);
   const [firstPlayer, setFirstPlayer] = useState<string>('x');
   const [scores, setScores] = useState<number[]>([0, 0, 0]);
   const [reset, setReset] = useState<number>(0);
@@ -30,6 +30,7 @@ export const TicTacToe = () => {
             upScore={upScore}
             firstPlayer={firstPlayer}
             reset={reset}
+            modeCPU={modeCPU}
           />
           <ScoreInterface scores={scores} />
         </>
