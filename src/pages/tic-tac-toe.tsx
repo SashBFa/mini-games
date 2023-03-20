@@ -5,25 +5,35 @@ import { Playground } from '../components/tic-tac-toe/playground';
 import { ScoreInterface } from '../components/tic-tac-toe/scoreInterface';
 
 export const TicTacToe = () => {
-  const [score, setScore] = useState({ x: 0, egality: 0, o: 0 });
-  const [reset, setReset] = useState<boolean>(false);
+  const [modeCPU, setModeCPU] = useState<boolean | null>(false);
+  const [firstPlayer, setFirstPlayer] = useState<string>('x');
+  const [scores, setScores] = useState<number[]>([0, 0, 0]);
+  const [reset, setReset] = useState<number>(0);
 
-  const endGame = (player: string) => {
-    if (player === 'x') {
-      setScore({ x: score.x + 1, egality: score.egality, o: score.o });
-    } else if (player === 'y') {
-      setScore({ x: score.x, egality: score.egality, o: score.o + 1 });
-    } else {
-      setScore({ x: score.x, egality: score.egality + 1, o: score.o });
-    }
-    setReset(!reset);
+  const upScore = (nbr: number) => {
+    const tempScores = [...scores];
+    tempScores[nbr] += 1;
+    setScores(tempScores);
+    setTimeout(() => {
+      setReset(Math.random());
+    }, 2000);
   };
 
   return (
     <section className="relative flex flex-col items-center justify-between min-h-screen w-full py-12 mx-auto">
-      <Navigation />
-      <Playground endGame={endGame} firstPlayer="x" reset={reset} />
-      <ScoreInterface scores={[score.x, score.egality, score.o]} />
+      {modeCPU === null ? (
+        <Menu />
+      ) : (
+        <>
+          <Navigation />
+          <Playground
+            upScore={upScore}
+            firstPlayer={firstPlayer}
+            reset={reset}
+          />
+          <ScoreInterface scores={scores} />
+        </>
+      )}
     </section>
   );
 };

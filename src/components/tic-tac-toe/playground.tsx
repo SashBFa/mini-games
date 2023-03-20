@@ -1,62 +1,63 @@
 import { useEffect, useState } from 'react';
 import { CheckPossibility } from './functions/CheckPossibility';
-import { CellType, GridType, InitGrid } from './functions/InitGrid';
-import { UpdateGrid } from './functions/UpdateGrid';
-import { possibility, PossibilityType } from './possibility';
+import { GridType, InitGrid } from './functions/InitGrid';
+import { InitPossibility, PossibilityType } from './functions/initPossibility';
 
 type PlaygroundType = {
-  endGame: (player: string) => void;
+  upScore: (nbr: number) => void;
   firstPlayer: string;
-  reset: boolean;
+  reset: number;
 };
 
-const grid_init: GridType = InitGrid();
-const dft_cellPlayed: CellType = {
-  x: 0,
-  y: 0,
-  value: '',
-};
+export const Playground = ({ upScore, firstPlayer, reset }: PlaygroundType) => {
+  const grid_init: GridType = InitGrid();
+  const poss_init: PossibilityType = InitPossibility();
 
-export const Playground = ({ endGame, firstPlayer, reset }: PlaygroundType) => {
   const [useGrid, setUseGrid] = useState<GridType>(grid_init);
   const [playerRound, setPlayerRound] = useState<string>(firstPlayer);
   const [possibilities, setPossibilities] =
-    useState<PossibilityType>(possibility);
-  const [cellPlayed, setCellPlayed] = useState<CellType>(dft_cellPlayed);
+    useState<PossibilityType>(poss_init);
 
-  const playerAction = (cell: CellType) => {
-    setCellPlayed(cell);
+  const updateGrid = (x: number, y: number) => {
+    const tempGrid = [...useGrid];
+    tempGrid[y][x].value = playerRound;
+    setUseGrid(tempGrid);
   };
 
-  const changePlayer = () => {
+  const switchPlayer = () => {
     playerRound === 'x' ? setPlayerRound('o') : setPlayerRound('x');
   };
 
-  useEffect(() => {
-    !possibilities.length && endGame('egality');
-  }, [possibilities]);
+  const newPoss = () => {
+    const newPossibilities: PossibilityType = CheckPossibility(
+      useGrid,
+      possibilities
+    );
+    if (newPossibilities.every((item) => !item.completed)) {
+      setPossibilities(newPossibilities);
+      return;
+    }
+    playerRound === 'x' ? upScore(0) : upScore(2);
+  };
+
+  const handlePlay = (x: number, y: number) => {
+    if (!useGrid[y][x].value) {
+      updateGrid(x, y);
+      newPoss();
+      switchPlayer();
+    }
+  };
 
   useEffect(() => {
-    if (cellPlayed !== dft_cellPlayed) {
-      setUseGrid(UpdateGrid(useGrid, cellPlayed));
-      setPossibilities(CheckPossibility(useGrid, possibilities));
-      if (possibilities.some((options) => options.completed)) {
-        endGame(playerRound);
-      } else {
-        changePlayer();
-      }
+    if (!possibilities.length) {
+      upScore(1);
     }
-  }, [cellPlayed]);
+  }, [possibilities]);
 
   useEffect(() => {
     setUseGrid(grid_init);
     setPlayerRound(firstPlayer);
-    setPossibilities(possibility);
-    setCellPlayed({
-      x: 0,
-      y: 0,
-      value: '',
-    });
+    setPossibilities(poss_init);
   }, [reset]);
 
   return (
@@ -66,7 +67,7 @@ export const Playground = ({ endGame, firstPlayer, reset }: PlaygroundType) => {
           {row.map((item, x) => (
             <button
               key={x}
-              onClick={() => playerAction({ x: x, y: y, value: playerRound })}
+              onClick={() => handlePlay(x, y)}
               className="bg-gradient-to-br from-cyan-800 to-cyan-900 rounded-md font-black text-7xl flex items-center justify-center h-24 w-24"
             >
               {item.value === 'x' ? (

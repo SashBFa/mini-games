@@ -1,4 +1,4 @@
-import { PossibilityType } from '../tools/possibility';
+import { PossibilityType } from './initPossibility';
 import { GridType } from './InitGrid';
 
 export const CheckPossibility = (
