@@ -40,16 +40,17 @@ export const Playground = ({
       useGrid,
       possibilities
     );
+
     if (newPossibilities.every((item) => !item.completed)) {
       setPossibilities(newPossibilities);
       switchPlayer();
       return;
     }
-    playerRound === 'x' ? upScore(0) : upScore(2);
+    playerRound === firstPlayer ? upScore(0) : upScore(2);
   };
 
   const handlePlay = (x: number, y: number) => {
-    if (!useGrid[y][x].value) {
+    if (!useGrid[y][x].value && possibilities.length) {
       updateGrid(x, y);
       newPoss();
     }
@@ -65,7 +66,8 @@ export const Playground = ({
     if (modeCPU && playerRound !== firstPlayer) {
       let CPU_tour = playerCPU(possibilities, useGrid, playerRound);
       setTimeout(() => {
-        handlePlay(CPU_tour.x, CPU_tour.y);
+        updateGrid(CPU_tour.x, CPU_tour.y);
+        newPoss();
       }, 1000);
     }
   }, [playerRound]);

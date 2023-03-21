@@ -15,14 +15,15 @@ export const CheckPossibility = (
       .join('')
       .split('');
 
-    if (tempArr.length > 1) {
-      if (tempArr.every((n) => n === tempArr[0])) {
-        if (tempArr.length === 3) combinaisons[i].completed = true;
+    if (tempArr.length === 3) {
+      if (tempArr[0] === tempArr[1] && tempArr[0] === tempArr[2]) {
+        combinaisons[i].completed = true;
       } else {
         combinaisons.splice(i, 1);
       }
+    } else if (tempArr.length === 2 && tempArr[0] !== tempArr[1]) {
+      combinaisons.splice(i, 1);
     }
   }
-
   return combinaisons;
 };
