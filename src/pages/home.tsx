@@ -9,6 +9,9 @@ export const Home = () => {
       <NavLink to={'/tic-tac-toe'}>
         <button className="btn-02">tic tac toe</button>
       </NavLink>
+      <NavLink to={'/sudoku'}>
+        <button className="btn-02">sudoku</button>
+      </NavLink>
     </div>
   );
 };
