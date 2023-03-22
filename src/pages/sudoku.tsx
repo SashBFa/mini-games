@@ -7,15 +7,14 @@ import {
 import { Playground } from '../components/sudoku/playground';
 
 export const Sudoku = () => {
-  const [matrix, setMatrix] = useState<SudokuMatrix>(initSudoku());
-
-  console.log(matrix);
+  const [difficulty, setDifficulty] = useState<number>(10);
+  const [puzzle, setPuzzle] = useState<SudokuMatrix>(initSudoku());
 
   return (
     <section className="relative flex flex-col items-center justify-between min-h-screen w-full py-12 mx-auto">
       <>
         <Navigation />
-        <Playground />
+        <Playground difficulty={difficulty} puzzle={puzzle} />
         <div />
       </>
     </section>

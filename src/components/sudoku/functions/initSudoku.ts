@@ -6,8 +6,6 @@ export const initSudoku = (): SudokuMatrix => {
     .map(() => new Array(9).fill(0));
 
   const nums = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-
-  // fill in the first row with the shuffled numbers
   for (let i = 0; i < 9; i++) {
     matrix[0][i] = nums[i];
   }
